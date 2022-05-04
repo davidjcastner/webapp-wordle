@@ -11,7 +11,14 @@ const configuration: webpack.Configuration = {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].js',
     },
+    devtool: 'source-map',
     resolve: { extensions: ['.ts', '.tsx', '.js', '.jsx'] },
+    module: {
+        rules: [
+            { test: /\.tsx?$/, loader: 'ts-loader' },
+            { test: /\.css/, use: ['style-loader', 'css-loader'] },
+        ],
+    },
     plugins: [new HtmlWebpackPlugin({ template: './app.html' })],
 };
 

@@ -1,0 +1,92 @@
+:root {
+    --screen-width-min: 300px;
+    --screen-width-min-1: 299px;
+    --screen-height-min: 600px;
+
+    --color-background: hsl(229, 14%, 22%);
+    --color-foreground: hsl(229, 14%, 80%);
+    --color-highlight: hsl(29, 70%, 70%);
+}
+
+#invalid-screen {
+    display: none;
+}
+
+
+@media screen and (max-width: var(--screen-width-min-1)) {
+    #invalid-screen {
+        display: block;
+    }
+    #app {
+        display: none;
+    }
+}
+html {
+    box-sizing: border-box;
+    scrollbar-gutter: stable;
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#phone-container {
+    --border-width: 4px;
+    width: calc(var(--screen-width-min) + 2 * var(--border-width));
+    height: calc(var(--screen-height-min) + 2 * var(--border-width));
+    border-width: var(--border-width);
+    border-style: solid;
+    border-color: var(--color-highlight);
+}
+
+/* container for vertical scrolling */
+.scrollable-container {
+    overflow-y: auto;
+    /* max-height: 100%; */
+    width: 100%;
+    height: 100%;
+}
+
+#app {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#title-bar {
+    width: 100%;
+    height: 2rem;
+    font-size: 2rem;
+}
+
+.guess-area {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.guess {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.letter {
+    border-radius: 0.25rem;
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--color-foreground);
+    width: 2.5rem;
+    height: 2.5rem;
+}
