@@ -1,6 +1,7 @@
 import { LetterResult } from '../enums/LetterResult';
 import { WordleEngine } from '../interfaces/WordleEngine';
 import { GuessResult } from '../types/GuessResult';
+import { calculateResult } from './calculateResult';
 
 /** all characters allowed in the wordle app */
 const VALID_CHARACTERS = new Set([...'ABCDEFGHIJKLMNOPQRSTUVWXYZ']);
@@ -224,17 +225,7 @@ export class WordleEngineImplementation implements WordleEngine {
             throw new Error('Guess must be an allowed guess');
         }
         this.guesses.push(guess);
-        const guessResult = [];
-        for (let i = 0; i < this.wordLength; i++) {
-            // add a random letter result to the guess result
-            const choices = [
-                LetterResult.WRONG,
-                LetterResult.CLOSE,
-                LetterResult.MATCH,
-            ];
-            const randomIndex = Math.floor(Math.random() * choices.length);
-            guessResult.push(choices[randomIndex]);
-        }
+        const guessResult = calculateResult(guess, this.answer);
         this.results.push(guessResult);
         return guessResult;
     }

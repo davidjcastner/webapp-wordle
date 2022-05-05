@@ -51,8 +51,19 @@ const updateStateUI = (state: any): void => {
     uiStateElement.append(jsonElement(state));
 };
 
+/** fetches a list of words to use */
+const getWordSet = async (url: string): Promise<Set<string>> => {
+    const response = await fetch(url);
+    const text = await response.text();
+    const words = text
+        .split('\n')
+        .map((word) => word.trim().toUpperCase())
+        .filter((word) => word.length > 0);
+    return new Set(words);
+};
+
 /** called on document load */
-const main = (): void => {
+const main = async (): Promise<void> => {
     // load ui first before loading data for the engine
     // this ensures there is something to render and view
     // even if its a loading spinner
@@ -60,21 +71,9 @@ const main = (): void => {
 
     // load data for the engine
     const maxGuesses = 6;
-    const wordLength = 3;
-    const allowedGuesses = new Set([
-        'APE',
-        'BAT',
-        'CAT',
-        'DOG',
-        'ELK',
-        'EMU',
-        'FOX',
-        'JAY',
-        'OWL',
-        'RAT',
-        'YAK',
-    ]);
-    const allowedAnswers = new Set(['CAT', 'DOG', 'FOX', 'OWL', 'RAT']);
+    const wordLength = 5;
+    const allowedGuesses = await getWordSet('assets/allowed_guesses.txt');
+    const allowedAnswers = await getWordSet('assets/allowed_answers.txt');
 
     // initialize world logic
     const wordleEngine = new WordleEngineImplementation();
@@ -103,7 +102,7 @@ const main = (): void => {
         } else if (event.code in keyCodeToLetter) {
             const letter = keyCodeToLetter[event.code];
             nextState = wordleApp.addCharacter(letter);
-        } else if (event.code === 'Tab') {
+        } else if (event.code === 'Slash') {
             nextState = wordleApp.newGame();
         } else {
             // console.log(`unhandled key event: ${event.code}`);

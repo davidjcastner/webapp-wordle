@@ -8,10 +8,16 @@ const configuration: webpack.Configuration = {
     context: path.resolve(__dirname, 'src'),
     entry: './app.ts',
     output: {
-        path: path.resolve(__dirname, 'dist'),
         filename: '[name].js',
+        path: path.resolve(__dirname, 'dist'),
     },
     devtool: 'source-map',
+    devServer: {
+        static: {
+            directory: path.resolve(__dirname, 'src/assets'),
+            publicPath: '/assets/',
+        },
+    },
     resolve: { extensions: ['.ts', '.tsx', '.js', '.jsx'] },
     module: {
         rules: [
