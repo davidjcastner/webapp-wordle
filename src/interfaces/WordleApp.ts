@@ -1,14 +1,14 @@
 import { WordleAppState } from '../types/WordleAppState';
-import { WordleLogic } from './WordleLogic';
+import { WordleEngine } from './WordleEngine';
 
 /** methods for interacting with a wordle application */
 export interface WordleApp {
-    /** gives the app access to a WordleLogic implementation */
-    initialize(wordleLogic: WordleLogic): WordleAppState;
+    /** gives the app access to a WordleEngine implementation */
+    initialize(wordleEngine: WordleEngine): WordleAppState;
     /** returns the current state */
     getState(): WordleAppState;
     /** resets the application by removing all guesses and characters */
-    reset(): WordleAppState;
+    newGame(): WordleAppState;
     /** adds a single character to the active guess if possible */
     addCharacter(character: string): WordleAppState;
     /** removes the last character from the active guess if possible */

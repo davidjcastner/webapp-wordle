@@ -1,6 +1,5 @@
-import { WordleApp } from './interfaces/WordleApp';
 import { WordleAppImplementation } from './logic/WordleAppImplementation';
-import { WordleLogicImplementation } from './logic/WordleLogicImplementation';
+import { WordleEngineImplementation } from './logic/WordleEngineImplementation';
 
 const keyCodeToLetter = {
     KeyA: 'A',
@@ -54,13 +53,42 @@ const updateStateUI = (state: any): void => {
 
 /** called on document load */
 const main = (): void => {
-    // initialize world logic
-    const wordleLogic = new WordleLogicImplementation();
+    // load ui first before loading data for the engine
+    // this ensures there is something to render and view
+    // even if its a loading spinner
     // ...
+
+    // load data for the engine
+    const maxGuesses = 6;
+    const wordLength = 3;
+    const allowedGuesses = new Set([
+        'APE',
+        'BAT',
+        'CAT',
+        'DOG',
+        'ELK',
+        'EMU',
+        'FOX',
+        'JAY',
+        'OWL',
+        'RAT',
+        'YAK',
+    ]);
+    const allowedAnswers = new Set(['CAT', 'DOG', 'FOX', 'OWL', 'RAT']);
+
+    // initialize world logic
+    const wordleEngine = new WordleEngineImplementation();
+    wordleEngine.setMaxGuesses(maxGuesses);
+    wordleEngine.setWordLength(wordLength);
+    wordleEngine.setAllowedGuesses(allowedGuesses);
+    wordleEngine.setAllowedAnswers(allowedAnswers);
 
     // initialize the app
     const wordleApp = new WordleAppImplementation();
-    const initialState = wordleApp.initialize(wordleLogic);
+    const initialState = wordleApp.initialize(wordleEngine);
+
+    // bind wordle app to the ui
+    // ...
 
     // initialize the ui
     updateStateUI(initialState);
@@ -76,7 +104,7 @@ const main = (): void => {
             const letter = keyCodeToLetter[event.code];
             nextState = wordleApp.addCharacter(letter);
         } else if (event.code === 'Tab') {
-            nextState = wordleApp.reset();
+            nextState = wordleApp.newGame();
         } else {
             // console.log(`unhandled key event: ${event.code}`);
             // console.log(event);

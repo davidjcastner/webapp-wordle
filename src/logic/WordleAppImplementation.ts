@@ -1,5 +1,5 @@
 import { WordleApp } from '../interfaces/WordleApp';
-import { WordleLogic } from '../interfaces/WordleLogic';
+import { WordleEngine } from '../interfaces/WordleEngine';
 import { WordleAppState } from '../types/WordleAppState';
 
 /** all characters allowed in the wordle app */
@@ -8,7 +8,7 @@ const VALID_CHARACTERS = new Set([...'ABCDEFGHIJKLMNOPQRSTUVWXYZ']);
 /** implementation of the WordleApp */
 export class WordleAppImplementation implements WordleApp {
     private isInitialized = false;
-    private wordleLogic: WordleLogic;
+    private wordleEngine: WordleEngine;
     private state: WordleAppState;
 
     /** ensures that the proper initialization has occurred */
@@ -22,8 +22,8 @@ export class WordleAppImplementation implements WordleApp {
      * can be used to reset the state for a new game */
     private initializeState(): void {
         this.state = {
-            maxGuesses: this.wordleLogic.getMaxGuesses(),
-            wordLength: this.wordleLogic.getWordLength(),
+            maxGuesses: this.wordleEngine.getMaxGuesses(),
+            wordLength: this.wordleEngine.getWordLength(),
             guessIndex: 0,
             characterIndex: 0,
             guesses: [],
@@ -33,12 +33,11 @@ export class WordleAppImplementation implements WordleApp {
         };
     }
 
-    /** gives the app access to a WordleLogic implementation */
-    initialize(wordleLogic: WordleLogic): WordleAppState {
-        this.wordleLogic = wordleLogic;
-        this.initializeState();
+    /** gives the app access to a WordleEngine implementation */
+    initialize(wordleEngine: WordleEngine): WordleAppState {
+        this.wordleEngine = wordleEngine;
         this.isInitialized = true;
-        return this.state;
+        return this.newGame();
     }
 
     /** returns the current state */
@@ -48,10 +47,11 @@ export class WordleAppImplementation implements WordleApp {
     }
 
     /** resets the application by removing all guesses and characters */
-    reset(): WordleAppState {
+    newGame(): WordleAppState {
         this.validateInitialization();
         this.initializeState();
-        this.wordleLogic.newGame();
+        this.wordleEngine.newGame();
+        this.wordleEngine.generateRandomAnswer();
         return this.state;
     }
 
@@ -138,11 +138,11 @@ export class WordleAppImplementation implements WordleApp {
         // get the current guess
         const guess = this.state.guesses[this.state.guesses.length - 1];
         // check if the completed guess is an allowed guess
-        if (!this.wordleLogic.isAllowedGuess(guess)) {
+        if (!this.wordleEngine.isAllowedGuess(guess)) {
             throw new Error(`Guess "${guess}" is not allowed`);
         }
         // get the result of the guess
-        const result = this.wordleLogic.makeGuess(guess);
+        const result = [...this.wordleEngine.makeGuess(guess)];
         // add the guess result to the next state
         this.state = {
             ...this.state,
@@ -151,11 +151,11 @@ export class WordleAppImplementation implements WordleApp {
             characterIndex: 0,
         };
         // check if the game is over, update state if so
-        if (this.wordleLogic.isGameOver()) {
+        if (this.wordleEngine.isGameOver()) {
             this.state = {
                 ...this.state,
                 isGameOver: true,
-                answer: this.wordleLogic.getAnswer(),
+                answer: this.wordleEngine.getAnswer(),
             };
         }
         return this.state;
