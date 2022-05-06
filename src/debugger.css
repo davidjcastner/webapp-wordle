@@ -1,0 +1,10 @@
+.debugger pre {
+    background-color: var(--color-primary-200);
+    border-color: var(--color-primary-300);
+    border-radius: 0.25rem;
+    border-width: 0.125rem;
+    padding: 1rem;
+    margin: 1rem;
+    line-height: 1rem;
+    font-size: 0.75rem;
+}

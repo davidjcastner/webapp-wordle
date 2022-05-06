@@ -1,0 +1,39 @@
+:root {
+    --default-color-primary-100: hsl(225, 15%, 78%);
+    --default-color-primary-200: hsl(225, 15%, 70%);
+    --default-color-primary-300: hsl(225, 15%, 62%);
+    --default-color-primary-400: hsl(225, 15%, 54%);
+    --default-color-primary-500: hsl(225, 15%, 46%);
+    --default-color-primary-600: hsl(225, 15%, 38%);
+    --default-color-primary-700: hsl(225, 15%, 30%);
+    --default-color-primary-800: hsl(225, 15%, 22%);
+    --default-color-primary-900: hsl(225, 15%, 15%);
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --color-primary-100: var(--default-color-primary-100);
+        --color-primary-200: var(--default-color-primary-200);
+        --color-primary-300: var(--default-color-primary-300);
+        --color-primary-400: var(--default-color-primary-400);
+        --color-primary-500: var(--default-color-primary-500);
+        --color-primary-600: var(--default-color-primary-600);
+        --color-primary-700: var(--default-color-primary-700);
+        --color-primary-800: var(--default-color-primary-800);
+        --color-primary-900: var(--default-color-primary-900);
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-primary-100: var(--default-color-primary-900);
+        --color-primary-200: var(--default-color-primary-800);
+        --color-primary-300: var(--default-color-primary-700);
+        --color-primary-400: var(--default-color-primary-600);
+        --color-primary-500: var(--default-color-primary-500);
+        --color-primary-600: var(--default-color-primary-400);
+        --color-primary-700: var(--default-color-primary-300);
+        --color-primary-800: var(--default-color-primary-200);
+        --color-primary-900: var(--default-color-primary-100);
+    }
+}

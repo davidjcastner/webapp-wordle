@@ -1,0 +1,8 @@
+html {
+    background-color: var(--color-primary-100);
+    color: var(--color-primary-900);
+}
+
+body {
+    margin: 0;
+}
