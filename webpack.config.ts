@@ -6,7 +6,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 const configuration: webpack.Configuration = {
     context: path.resolve(__dirname, 'src'),
-    entry: './app.ts',
+    entry: './app.tsx',
     output: {
         filename: '[name].js',
         path: path.resolve(__dirname, 'dist'),
