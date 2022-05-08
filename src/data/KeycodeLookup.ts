@@ -1,5 +1,5 @@
 /** lookup for converting event.code to a wordle letter */
-export const keycodeLookup = {
+export const KEYCODE_LOOKUP = {
     KeyA: 'A',
     KeyB: 'B',
     KeyC: 'C',

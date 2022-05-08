@@ -1,5 +1,7 @@
 /** all possible results for a single letter */
 export enum LetterResult {
+    /** no information is known */
+    UNSET = 'unset',
     /** the letter or nth count of the letter
      * does not appear in the answer */
     WRONG = 'wrong',

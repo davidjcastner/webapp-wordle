@@ -1,241 +1,173 @@
-import { LetterResult } from '../enums/LetterResult';
+import { VALID_CHARACTERS } from '../data/ValidCharacters';
 import { WordleEngine } from '../interfaces/WordleEngine';
+import { calculateResult } from '../logic/calculateResult';
 import { GuessResult } from '../types/GuessResult';
-import { calculateResult } from './calculateResult';
 
-/** all characters allowed in the wordle app */
-const VALID_CHARACTERS = new Set([...'ABCDEFGHIJKLMNOPQRSTUVWXYZ']);
-
-// helper validation methods
-const isValidCharacter = (character: string): boolean =>
-    VALID_CHARACTERS.has(character);
+/** checks if each character in the word is a valid character */
 const isValidWord = (word: string): boolean =>
-    [...word].every(isValidCharacter);
+    [...word].every((char) => VALID_CHARACTERS.has(char));
+
+/** checks if the number is a positive integer */
 const isPositiveInteger = (number: number): boolean =>
     number > 0 && Number.isInteger(number);
 
+/** checks if one set is a super set of another */
+const isSuperSet = <T>(superSet: Set<T>, subSet: Set<T>): boolean =>
+    [...subSet].every((element) => superSet.has(element));
+
 /** interactions available in the wordle engine */
 export class WordleEngineImplementation implements WordleEngine {
-    private maxGuesses: number;
-    private wordLength: number;
-    private allowedGuesses: Set<string>;
-    private allowedAnswers: Set<string>;
-    private isSetMaxGuesses: boolean = false;
-    private isSetWordLength: boolean = false;
-    private isSetAllowedGuesses: boolean = false;
-    private isSetAllowedAnswers: boolean = false;
+    // private properties
+    private maxGuesses: number = 1;
+    private wordLength: number = 1;
+    private allowedGuesses: Set<string> = new Set(['A']);
+    private allowedAnswers: Set<string> = new Set(['A']);
     private guesses: Array<string> = [];
     private results: Array<GuessResult> = [];
-    private answer: string | null;
+    private answer: string = 'A';
+
+    /** utility methods for creating a copy of a class instance,
+     * helps to keep the class immutable */
+    private copy(): WordleEngineImplementation {
+        const copy = new WordleEngineImplementation();
+        copy.maxGuesses = this.maxGuesses;
+        copy.wordLength = this.wordLength;
+        copy.allowedGuesses = this.allowedGuesses;
+        copy.allowedAnswers = this.allowedAnswers;
+        copy.guesses = this.guesses;
+        copy.results = this.results;
+        copy.answer = this.answer;
+        return copy;
+    }
+
+    /** sets properties for the engine to use */
+    setProperties(maxGuesses: number, wordLength: number): WordleEngine {
+        // check if the maxGuesses is a positive integer
+        if (!isPositiveInteger(maxGuesses)) {
+            throw new Error('Max guesses must be a positive integer');
+        }
+        // check if the wordLength is a positive integer
+        if (!isPositiveInteger(wordLength)) {
+            throw new Error('Word length must be a positive integer');
+        }
+        // set the properties
+        const copy = this.copy();
+        copy.maxGuesses = maxGuesses;
+        copy.wordLength = wordLength;
+        copy.allowedGuesses = new Set();
+        copy.allowedAnswers = new Set();
+        copy.answer = null;
+        return copy;
+    }
 
     /** checks if words in a set meet word length and character conditions */
-    isValidWordSet(words: Set<string>): boolean {
+    private isValidWordSet(words: Set<string>): boolean {
         return [...words].every(
             (word) => word.length === this.wordLength && isValidWord(word)
         );
     }
 
-    /** updates the number of max guesses */
-    setMaxGuesses(guesses: number): void {
-        // check if the number is a positive integer
-        if (!isPositiveInteger(guesses)) {
-            throw new Error('Number of guesses must be a positive integer');
-        }
-        this.maxGuesses = guesses;
-        this.isSetMaxGuesses = true;
-    }
-
-    /** sets the word length */
-    setWordLength(length: number): void {
-        // check if the number is a positive integer
-        if (!isPositiveInteger(length)) {
-            throw new Error('Word length must be a positive integer');
-        }
-        this.wordLength = length;
-        this.isSetWordLength = true;
-    }
-
-    /** updates the set of all allowed guesses */
-    setAllowedGuesses(guesses: Set<string>): void {
-        // check if word length has been set
-        if (!this.isSetWordLength) {
-            throw new Error('Word length must be set');
-        }
+    /** gives the ability to load data asynchronously */
+    loadData(guesses: Set<string>, answers: Set<string>): WordleEngine {
         // check if the set of guesses is valid
         if (!this.isValidWordSet(guesses)) {
             throw new Error('Guesses must be a set of valid words');
         }
-        // copy the set of guesses
-        this.allowedGuesses = new Set([...guesses]);
-        this.isSetAllowedGuesses = true;
-    }
-
-    /** updates the set of all allowed answers,
-     * each allowed answer must also be an allowed guess */
-    setAllowedAnswers(answers: Set<string>): void {
-        // check if guesses have been set
-        if (!this.isSetAllowedGuesses) {
-            throw new Error('Guesses must be set');
-        }
         // check if the set of answers is valid
-        if (![...answers].every((word) => this.allowedGuesses.has(word))) {
+        // by seeing if each answer is an allowed guess
+        if (!isSuperSet(guesses, answers)) {
             throw new Error(
                 'Answers must be a set of valid words and each must be an allowed guess'
             );
         }
-        // copy the set of answers
-        this.allowedAnswers = new Set([...answers]);
-        this.isSetAllowedAnswers = true;
+        // copy each set into a new instance to maintain immutability
+        const copy = this.copy();
+        copy.allowedGuesses = new Set(guesses);
+        copy.allowedAnswers = new Set(answers);
+        return copy;
     }
 
-    /** ensures that all initialization has taken place */
-    private validateInitialization(): void {
-        if (
-            !(
-                this.isSetMaxGuesses &&
-                this.isSetWordLength &&
-                this.isSetAllowedGuesses &&
-                this.isSetAllowedAnswers
-            )
-        ) {
-            throw new Error('Initialization must be complete');
-        }
-    }
-
-    /** returns the total number of guesses for a single game */
-    getMaxGuesses(): number {
-        this.validateInitialization();
-        return this.maxGuesses;
-    }
-
-    /** returns the number of letters in the answer and each guess */
-    getWordLength(): number {
-        this.validateInitialization();
-        return this.wordLength;
-    }
-
-    /** returns the number of guesses remaining */
-    getAllowedGuesses(): Readonly<Set<string>> {
-        this.validateInitialization();
-        return this.allowedGuesses;
-    }
-
-    /** returns the set of all allowed answers */
-    getAllowedAnswers(): Readonly<Set<string>> {
-        this.validateInitialization();
-        return this.allowedAnswers;
-    }
-
-    /** resets the class for a new game */
-    getRemainingGuesses(): number {
-        this.validateInitialization();
-        if (this.guesses === undefined) {
-            return this.maxGuesses;
-        }
-        return this.maxGuesses - this.guesses.length;
-    }
-
-    /** checks if the guess is in the set of acceptable guesses */
-    isAllowedGuess(guess: string): boolean {
-        this.validateInitialization();
-        return this.allowedGuesses.has(guess);
-    }
-
-    /** checks if the answer is in the set of acceptable answers */
-    isAllowedAnswer(answer: string): boolean {
-        this.validateInitialization();
-        return this.allowedAnswers.has(answer);
-    }
-
-    /** returns the set of all allowed guesses */
-    newGame(): void {
-        this.validateInitialization();
-        this.guesses = [];
-        this.results = [];
-        this.answer = null;
-    }
-
-    /** sets the answer for the game, must not have any guesses made */
-    setAnswer(answer: string): void {
-        if (!this.isAllowedAnswer(answer)) {
-            throw new Error('Answer must be an allowed answer');
-        }
-        this.answer = answer;
-    }
-
-    /** sets the answer as a random valid answer */
-    generateRandomAnswer(): void {
-        this.validateInitialization();
+    /** picks a random word from the set of allowed answers */
+    private generateRandomAnswer(): string {
         const randomIndex = Math.floor(
             Math.random() * this.allowedAnswers.size
         );
         const randomAnswer = [...this.allowedAnswers][randomIndex];
-        this.answer = randomAnswer;
+        return randomAnswer;
     }
 
-    /** checks if any game over conditions are met */
-    isGameOver(): boolean {
-        this.validateInitialization();
+    /** resets the engine for a new game */
+    newGame(): WordleEngine {
+        const copy = this.copy();
+        copy.guesses = [];
+        copy.results = [];
+        copy.answer = copy.generateRandomAnswer();
+        return copy;
+    }
+
+    /**
+     * checks if any game over conditions are met:
+     * 1. the number of guesses is equal to the max guesses
+     * 2. the answer was guessed
+     */
+    private isGameOver(): boolean {
         return (
-            this.guesses.length > 0 &&
-            (this.guesses.length === this.maxGuesses ||
-                this.guesses.some((guess) => this.answer === guess))
+            this.guesses.length === this.maxGuesses ||
+            this.guesses.some((guess) => guess === this.answer)
         );
     }
 
-    /** returns true if the answer was guesses, assumes that the game is over */
-    isWin(): boolean {
-        this.validateInitialization();
-        return this.guesses.some((guess) => this.answer === guess);
-    }
-
-    /** returns the score of current game,
-     * assumes that the game is over and that the answer was guesses */
-    getScore(): number {
-        if (!this.isWin()) {
-            throw new Error('Game is not over or you did not win');
-        }
-        return this.guesses.length;
-    }
-
-    /** returns the answer the user was attempting to guess,
-     * assumes that the game is over */
-    getAnswer(): string {
-        if (!this.isGameOver()) {
-            throw new Error('Game is not over');
-        }
-        return this.answer;
-    }
-
     /** checks if a guess can still be made */
-    canMakeGuess(): boolean {
+    private canMakeGuess(): boolean {
         if (!this.answer) {
             throw new Error('Answer must be set');
         }
         return !this.isGameOver();
     }
 
-    /** makes a guess for the current game and returns the result,
-     * assumes that the game is not over and that a guess can still be made */
-    makeGuess(guess: string): Readonly<GuessResult> {
+    /** makes and calculate the result of a guess */
+    makeGuess(guess: string): WordleEngine {
+        // check if a guess can still be made
+        // and that the guess is allowed
         if (!this.canMakeGuess()) {
             throw new Error('Game is over or no guesses can be made');
         }
         if (!this.isAllowedGuess(guess)) {
             throw new Error('Guess must be an allowed guess');
         }
-        this.guesses.push(guess);
+        // calculate the result
         const guessResult = calculateResult(guess, this.answer);
-        this.results.push(guessResult);
-        return guessResult;
+        // copy the engine to maintain immutability
+        const copy = this.copy();
+        copy.guesses = [...copy.guesses, guess];
+        copy.results = [...copy.results, guessResult];
+        return copy;
     }
 
-    /** returns the previous guesses */
-    getPreviousGuesses(): Readonly<Array<string>> {
-        return this.guesses;
+    /** checks if the guess is in the set of acceptable guesses */
+    isAllowedGuess(guess: string): boolean {
+        return this.allowedGuesses.has(guess);
     }
-    /** returns the previous results */
-    getPreviousResults(): Readonly<Array<GuessResult>> {
-        return this.results;
+
+    /** returns the result of the last guess,
+     * assumes that at least one guess was made */
+    getLastResult(): GuessResult {
+        // check that at least one guess was made
+        if (this.guesses.length === 0) {
+            throw new Error('No guesses have been made');
+        }
+        // return the last result
+        return this.results[this.results.length - 1];
+    }
+
+    /** returns the answer for the current game,
+     * assumes that the game is over */
+    getAnswer(): string {
+        // check that the game is over
+        if (!this.isGameOver()) {
+            throw new Error('Game is not over');
+        }
+        // return the answer
+        return this.answer;
     }
 }

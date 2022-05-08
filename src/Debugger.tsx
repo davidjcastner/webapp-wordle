@@ -1,38 +1,87 @@
 import { FC, useEffect, useReducer, useState } from 'react';
-import { keycodeLookup } from './data/keycodeLookup';
+import { KEYCODE_LOOKUP } from './data/KeycodeLookup';
 import { ActionType } from './enums/actionType';
-import { WordleAppState } from './types/WordleAppState';
-import './debugger.css';
+import { WordleApp } from './interfaces/WordleApp';
+import { WordleEngine } from './interfaces/WordleEngine';
 import { WordleAppImplementation } from './logic/WordleAppImplementation';
+import './debugger.css';
+import { WordleEngineImplementation } from './logic/WordleEngineImplementation';
 
-const WordleApp = WordleAppImplementation;
+// setup for the reducer
 type Reducer = (
-    state: WordleAppState,
+    state: WordleApp,
     action: { type: ActionType; payload?: any }
-) => WordleAppState;
+) => WordleApp;
 const reducer: Reducer = (state, action) => {
     switch (action.type) {
+        case ActionType.INITIALIZE:
+            return action.payload;
         case ActionType.NEW_GAME:
-            return WordleApp.newGame(state);
+            return state.newGame();
         case ActionType.ADD_CHARACTER:
             const character = action.payload;
-            return WordleApp.addCharacter(state, character);
+            return state.addCharacter(character);
         case ActionType.REMOVE_CHARACTER:
-            return WordleApp.removeCharacter(state);
+            return state.removeCharacter();
         case ActionType.SUBMIT_GUESS:
-            return WordleApp.submitGuess(state);
+            return state.submitGuess();
         default:
             console.log(`Unknown action type: ${action.type}`);
             return state;
     }
 };
-const initialState: WordleAppState = WordleApp.initialize();
+
+/** fetches a set of words to use */
+const fetchWordSet = (
+    url: string,
+    callback: (words: Set<string>) => void
+): void => {
+    fetch(url)
+        .then((response) => response.text())
+        .then((text) => {
+            const words = text
+                .split('\n')
+                .map((word) => word.trim().toUpperCase())
+                .filter((word) => word.length > 0);
+            callback(new Set(words));
+        });
+};
+const initialState: WordleApp = new WordleAppImplementation();
 
 /** only displays the current state of the application for debugging */
 export const Debugger: FC = () => {
+    // setup flags for loading actions
+    const [allowedGuesses, setAllowedGuesses] = useState(null);
+    const [allowedAnswers, setAllowedAnswers] = useState(null);
     // setup reducer
     const [state, dispatch] = useReducer(reducer, initialState);
     const [lastAction, setLastAction] = useState({});
+
+    // initialize the app and engine
+    // called once on mount
+    useEffect(() => {
+        const engine: WordleEngine = new WordleEngineImplementation();
+        let app: WordleApp = new WordleAppImplementation();
+        app = app.setWordleEngine(engine);
+        app = app.setProperties(6, 5);
+        dispatch({ type: ActionType.INITIALIZE, payload: app });
+        fetchWordSet('/assets/allowed_guesses.txt', setAllowedGuesses);
+        fetchWordSet('/assets/allowed_answers.txt', setAllowedAnswers);
+    }, []);
+
+    // load data for engine and app
+    // called once ready to load
+    useEffect(() => {
+        if (state.isReadyForData && allowedGuesses && allowedAnswers) {
+            const newState = state.loadData(allowedGuesses, allowedAnswers);
+            dispatch({ type: ActionType.INITIALIZE, payload: newState });
+        }
+    }, [state.isReadyForData, allowedGuesses, allowedAnswers]);
+
+    // start a new game once the data has been loaded
+    useEffect(() => {
+        state.isDataLoaded && dispatch({ type: ActionType.NEW_GAME });
+    }, [state.isDataLoaded]);
 
     // bind dispatch to event handler
     const keydownHandler = (event: KeyboardEvent): void => {
@@ -41,10 +90,10 @@ export const Debugger: FC = () => {
         // check if actionable key
         if (code === 'Slash') {
             action = { type: ActionType.NEW_GAME };
-        } else if (code in keycodeLookup) {
+        } else if (code in KEYCODE_LOOKUP) {
             action = {
                 type: ActionType.ADD_CHARACTER,
-                payload: keycodeLookup[code],
+                payload: KEYCODE_LOOKUP[code],
             };
         } else if (code === 'Backspace') {
             action = { type: ActionType.REMOVE_CHARACTER };
@@ -57,14 +106,23 @@ export const Debugger: FC = () => {
             dispatch(action);
         }
     };
-
     // add event listener when app is ready
+    // after data has been loaded
     useEffect(() => {
-        document.addEventListener('keydown', keydownHandler);
-    }, []);
+        state.isReady && document.addEventListener('keydown', keydownHandler);
+    }, [state.isReady]);
 
     // create a debug string for what needs debugging
-    const debugObject = { action: lastAction, state };
+    const debugState = {
+        maxGuesses: state.maxGuesses,
+        wordLength: state.wordLength,
+        guesses: state.guesses,
+        results: state.results,
+        isGameOver: state.isGameOver,
+        answer: state.answer,
+        characterStatus: state.characterStatus,
+    };
+    const debugObject = { action: lastAction, state: debugState };
     const debugString = JSON.stringify(debugObject, null, 4);
 
     // return debugger component
