@@ -1,45 +1,32 @@
 import { FC, useEffect, useReducer, useState } from 'react';
+import { keycodeLookup } from './data/keycodeLookup';
+import { ActionType } from './enums/actionType';
+import { WordleAppState } from './types/WordleAppState';
 import './debugger.css';
+import { WordleAppImplementation } from './logic/WordleAppImplementation';
 
-/** helper lookup for event.code to character */
-const keyCodeToLetter = {
-    KeyA: 'A',
-    KeyB: 'B',
-    KeyC: 'C',
-    KeyD: 'D',
-    KeyE: 'E',
-    KeyF: 'F',
-    KeyG: 'G',
-    KeyH: 'H',
-    KeyI: 'I',
-    KeyJ: 'J',
-    KeyK: 'K',
-    KeyL: 'L',
-    KeyM: 'M',
-    KeyN: 'N',
-    KeyO: 'O',
-    KeyP: 'P',
-    KeyQ: 'Q',
-    KeyR: 'R',
-    KeyS: 'S',
-    KeyT: 'T',
-    KeyU: 'U',
-    KeyV: 'V',
-    KeyW: 'W',
-    KeyX: 'X',
-    KeyY: 'Y',
-    KeyZ: 'Z',
+const WordleApp = WordleAppImplementation;
+type Reducer = (
+    state: WordleAppState,
+    action: { type: ActionType; payload?: any }
+) => WordleAppState;
+const reducer: Reducer = (state, action) => {
+    switch (action.type) {
+        case ActionType.NEW_GAME:
+            return WordleApp.newGame(state);
+        case ActionType.ADD_CHARACTER:
+            const character = action.payload;
+            return WordleApp.addCharacter(state, character);
+        case ActionType.REMOVE_CHARACTER:
+            return WordleApp.removeCharacter(state);
+        case ActionType.SUBMIT_GUESS:
+            return WordleApp.submitGuess(state);
+        default:
+            console.log(`Unknown action type: ${action.type}`);
+            return state;
+    }
 };
-
-/** action types */
-enum ActionType {
-    NEW_GAME = 'NEW_GAME',
-    ADD_CHARACTER = 'ADD_CHARACTER',
-    REMOVE_CHARACTER = 'REMOVE_CHARACTER',
-    SUBMIT_GUESS = 'SUBMIT_GUESS',
-}
-const initialState = {};
-const reducer = (state, action) => state;
+const initialState: WordleAppState = WordleApp.initialize();
 
 /** only displays the current state of the application for debugging */
 export const Debugger: FC = () => {
@@ -54,10 +41,10 @@ export const Debugger: FC = () => {
         // check if actionable key
         if (code === 'Slash') {
             action = { type: ActionType.NEW_GAME };
-        } else if (code in keyCodeToLetter) {
+        } else if (code in keycodeLookup) {
             action = {
                 type: ActionType.ADD_CHARACTER,
-                payload: keyCodeToLetter[code],
+                payload: keycodeLookup[code],
             };
         } else if (code === 'Backspace') {
             action = { type: ActionType.REMOVE_CHARACTER };
