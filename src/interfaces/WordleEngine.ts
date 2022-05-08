@@ -1,7 +1,7 @@
 import { GuessResult } from '../types/GuessResult';
 
 /** methods that would otherwise mutate the engine */
-interface WordleEngineMutations {
+interface Mutations {
     /** sets properties for the engine to use */
     setProperties(maxGuesses: number, wordLength: number): WordleEngine;
     /** gives the ability to load data asynchronously */
@@ -13,7 +13,7 @@ interface WordleEngineMutations {
 }
 
 /** properties required by the wordle app */
-interface WordleEngineAPI {
+interface API {
     /** checks if the guess is in the set of acceptable guesses */
     isAllowedGuess(guess: string): boolean;
     /** returns the result of the last guess,
@@ -25,4 +25,4 @@ interface WordleEngineAPI {
 }
 
 /** interactions available in the wordle engine */
-export interface WordleEngine extends WordleEngineAPI, WordleEngineMutations {}
+export interface WordleEngine extends Mutations, API {}

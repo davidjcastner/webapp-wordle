@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import { AppData } from '../components/AppData';
+import { ErrorHandler } from '../components/ErrorHandler';
 import { GuessArea } from '../components/GuessArea';
 import { Keyboard } from '../components/Keyboard';
 import { Loading } from '../components/Loading';
@@ -63,6 +64,7 @@ const AppWithContext: FC = () => {
                 {!app.isReady && <Loading />}
                 {app.isReady && <GuessArea />}
                 {app.isReady && <Keyboard />}
+                {app.isReady && <ErrorHandler />}
             </div>
         </>
     );

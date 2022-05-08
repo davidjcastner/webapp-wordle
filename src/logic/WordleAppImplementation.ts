@@ -72,9 +72,14 @@ const removeLastCharacter = (str: string): string => str.slice(0, -1);
 /** methods for interacting with a wordle application */
 export class WordleAppImplementation implements WordleApp {
     // public properties
+    // error properties
+    errorId: number = 0;
+    errors: Record<number, string> = {};
+    // loading flags
     isReadyForData: boolean = false;
     isDataLoaded: boolean = false;
     isReady: boolean = false;
+    // app state
     maxGuesses: number = 1;
     wordLength: number = 1;
     guesses: Array<string> = [];
@@ -92,6 +97,8 @@ export class WordleAppImplementation implements WordleApp {
      * helps to keep the class immutable */
     private copy(): WordleAppImplementation {
         const copy = new WordleAppImplementation();
+        copy.errorId = this.errorId;
+        copy.errors = this.errors;
         copy.isReadyForData = this.isReadyForData;
         copy.isDataLoaded = this.isDataLoaded;
         copy.isReady = this.isReady;
@@ -105,6 +112,21 @@ export class WordleAppImplementation implements WordleApp {
         copy.engine = this.engine;
         copy.guessIndex = this.guessIndex;
         copy.characterIndex = this.characterIndex;
+        return copy;
+    }
+
+    // error handling methods
+    /** adds an error to the error registry */
+    addError(message: string): WordleApp {
+        const copy = this.copy();
+        copy.errorId++;
+        copy.errors = { ...copy.errors, [copy.errorId]: message };
+        return copy;
+    }
+    /** removes an error from the error registry */
+    removeError(errorId: number): WordleApp {
+        const copy = this.copy();
+        delete copy.errors[errorId];
         return copy;
     }
 

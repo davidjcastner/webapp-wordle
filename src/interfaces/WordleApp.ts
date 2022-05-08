@@ -2,11 +2,29 @@ import { WordleEngine } from '../interfaces/WordleEngine';
 import { CharacterStatus } from '../types/CharacterStatus';
 import { GuessResult } from '../types/GuessResult';
 
-/** state of the application for any ui to use */
-interface WordleAppState {
+/** properties for errors */
+interface ErrorProperties {
+    readonly errorId: number;
+    readonly errors: Record<number, string>;
+}
+
+/** actions for errors */
+interface ErrorActions {
+    /** adds an error to the error registry */
+    addError(message: string): WordleApp;
+    /** removes an error from the error registry */
+    removeError(id: number): WordleApp;
+}
+
+/** flags for loading process */
+interface LoadingFlags {
     readonly isReadyForData: boolean;
     readonly isDataLoaded: boolean;
     readonly isReady: boolean;
+}
+
+/** state of the application for any ui to use */
+interface AppState {
     readonly maxGuesses: number;
     readonly wordLength: number;
     readonly guesses: Array<string>;
@@ -17,7 +35,7 @@ interface WordleAppState {
 }
 
 /** methods for setting up the wordle app */
-interface WordleAppSetup {
+interface SetupMethods {
     /** sets the wordle engine to use */
     setWordleEngine(wordleEngine: WordleEngine): WordleApp;
     /** sets properties for the app to use */
@@ -27,7 +45,7 @@ interface WordleAppSetup {
 }
 
 /** methods for callable actions from the app */
-interface WordleAppActions {
+interface Actions {
     /** resets the application by removing all guesses and characters */
     newGame(): WordleApp;
     /** adds a single character to the active guess if possible */
@@ -40,6 +58,9 @@ interface WordleAppActions {
 
 /** methods for interacting with a wordle application */
 export interface WordleApp
-    extends WordleAppActions,
-        WordleAppSetup,
-        WordleAppState {}
+    extends ErrorProperties,
+        ErrorActions,
+        LoadingFlags,
+        AppState,
+        SetupMethods,
+        Actions {}
