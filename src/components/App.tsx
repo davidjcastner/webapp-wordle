@@ -4,6 +4,7 @@ import { ErrorHandler } from '../components/ErrorHandler';
 import { GuessArea } from '../components/GuessArea';
 import { Keyboard } from '../components/Keyboard';
 import { Loading } from '../components/Loading';
+import { NewGame } from '../components/NewGame';
 import { useWordle, WordleProvider } from '../context/wordle';
 import { fetchWordSet } from '../data/fetchWordSet';
 import { ActionType } from '../enums/actionType';
@@ -63,7 +64,8 @@ const AppWithContext: FC = () => {
                 </div>
                 {!app.isReady && <Loading />}
                 {app.isReady && <GuessArea />}
-                {app.isReady && <Keyboard />}
+                {app.isReady && !app.isGameOver && <Keyboard />}
+                {app.isReady && app.isGameOver && <NewGame />}
                 {app.isReady && <ErrorHandler />}
             </div>
         </>
