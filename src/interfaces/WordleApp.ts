@@ -1,4 +1,3 @@
-import { LetterResult } from '../enums/LetterResult';
 import { WordleEngine } from '../interfaces/WordleEngine';
 import { CharacterStatus } from '../types/CharacterStatus';
 import { GuessResult } from '../types/GuessResult';

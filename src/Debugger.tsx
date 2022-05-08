@@ -1,52 +1,13 @@
 import { FC, useEffect, useReducer, useState } from 'react';
+import { fetchWordSet } from './data/fetchWordSet';
 import { KEYCODE_LOOKUP } from './data/KeycodeLookup';
 import { ActionType } from './enums/actionType';
 import { WordleApp } from './interfaces/WordleApp';
 import { WordleEngine } from './interfaces/WordleEngine';
 import { WordleAppImplementation } from './logic/WordleAppImplementation';
-import './debugger.css';
 import { WordleEngineImplementation } from './logic/WordleEngineImplementation';
-
-// setup for the reducer
-type Reducer = (
-    state: WordleApp,
-    action: { type: ActionType; payload?: any }
-) => WordleApp;
-const reducer: Reducer = (state, action) => {
-    switch (action.type) {
-        case ActionType.INITIALIZE:
-            return action.payload;
-        case ActionType.NEW_GAME:
-            return state.newGame();
-        case ActionType.ADD_CHARACTER:
-            const character = action.payload;
-            return state.addCharacter(character);
-        case ActionType.REMOVE_CHARACTER:
-            return state.removeCharacter();
-        case ActionType.SUBMIT_GUESS:
-            return state.submitGuess();
-        default:
-            console.log(`Unknown action type: ${action.type}`);
-            return state;
-    }
-};
-
-/** fetches a set of words to use */
-const fetchWordSet = (
-    url: string,
-    callback: (words: Set<string>) => void
-): void => {
-    fetch(url)
-        .then((response) => response.text())
-        .then((text) => {
-            const words = text
-                .split('\n')
-                .map((word) => word.trim().toUpperCase())
-                .filter((word) => word.length > 0);
-            callback(new Set(words));
-        });
-};
-const initialState: WordleApp = new WordleAppImplementation();
+import { wordleReducer } from './reducers/wordleReducer';
+import './debugger.css';
 
 /** only displays the current state of the application for debugging */
 export const Debugger: FC = () => {
@@ -54,7 +15,10 @@ export const Debugger: FC = () => {
     const [allowedGuesses, setAllowedGuesses] = useState(null);
     const [allowedAnswers, setAllowedAnswers] = useState(null);
     // setup reducer
-    const [state, dispatch] = useReducer(reducer, initialState);
+    const [state, dispatch] = useReducer(
+        wordleReducer,
+        new WordleAppImplementation()
+    );
     const [lastAction, setLastAction] = useState({});
 
     // initialize the app and engine

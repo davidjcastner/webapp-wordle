@@ -1,5 +1,5 @@
 /** all possible results for a single letter */
-export enum LetterResult {
+export enum LetterStatus {
     /** no information is known */
     UNSET = 'unset',
     /** the letter or nth count of the letter

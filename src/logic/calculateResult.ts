@@ -1,17 +1,17 @@
-import { LetterResult } from '../enums/LetterResult';
+import { LetterStatus } from '../enums/LetterStatus';
 import { GuessResult } from '../types/GuessResult';
 
 /** returns the result for the guess based on the answer,
  * assumes that the guess and answer are both valid */
 export const calculateResult = (guess: string, answer: string): GuessResult => {
     // start with the default of all letters being wrong
-    const result: LetterResult[] = Array(guess.length).fill(LetterResult.WRONG);
+    const result: LetterStatus[] = Array(guess.length).fill(LetterStatus.WRONG);
     // start with checking for correct letters
     // while tracking unsolved positions
     const unsolvedPositions = new Set<number>();
     [...guess].forEach((letter, index) => {
         if (letter === answer[index]) {
-            result[index] = LetterResult.MATCH;
+            result[index] = LetterStatus.MATCH;
         } else {
             unsolvedPositions.add(index);
         }
@@ -30,7 +30,7 @@ export const calculateResult = (guess: string, answer: string): GuessResult => {
     [...guess].forEach((letter, index) => {
         if (unsolvedPositions.has(index)) {
             if (letterCount[letter] > 0) {
-                result[index] = LetterResult.CLOSE;
+                result[index] = LetterStatus.CLOSE;
                 letterCount[letter]--;
             }
         }

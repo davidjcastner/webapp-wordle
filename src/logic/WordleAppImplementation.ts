@@ -1,5 +1,5 @@
 import { VALID_CHARACTERS } from '../data/ValidCharacters';
-import { LetterResult } from '../enums/LetterResult';
+import { LetterStatus } from '../enums/LetterStatus';
 import { WordleApp } from '../interfaces/WordleApp';
 import { WordleEngine } from '../interfaces/WordleEngine';
 import { CharacterStatus } from '../types/CharacterStatus';
@@ -9,7 +9,7 @@ import { GuessResult } from '../types/GuessResult';
 const createStatus = (): CharacterStatus => {
     const status = {};
     [...VALID_CHARACTERS].forEach((character) => {
-        status[character] = LetterResult.UNSET;
+        status[character] = LetterStatus.UNSET;
     });
     return status;
 };
@@ -27,22 +27,22 @@ const updateStatus = (
 ): CharacterStatus => {
     const newStatus = { ...status };
     // create a map of letter to letter result
-    const letterMap: Record<string, LetterResult> = {};
+    const letterMap: Record<string, LetterStatus> = {};
     [...guess].forEach((letter, index) => {
         const letterResult = result[index];
-        const letterMapResult: LetterResult | undefined = letterMap[letter];
+        const letterMapResult: LetterStatus | undefined = letterMap[letter];
         switch (letterResult) {
-            case LetterResult.MATCH:
-                letterMap[letter] = LetterResult.MATCH;
+            case LetterStatus.MATCH:
+                letterMap[letter] = LetterStatus.MATCH;
                 break;
-            case LetterResult.CLOSE:
-                if (letterMapResult !== LetterResult.MATCH) {
-                    letterMap[letter] = LetterResult.CLOSE;
+            case LetterStatus.CLOSE:
+                if (letterMapResult !== LetterStatus.MATCH) {
+                    letterMap[letter] = LetterStatus.CLOSE;
                 }
                 break;
-            case LetterResult.WRONG:
+            case LetterStatus.WRONG:
                 if (letterMapResult === undefined) {
-                    letterMap[letter] = LetterResult.WRONG;
+                    letterMap[letter] = LetterStatus.WRONG;
                 }
                 break;
         }
@@ -60,8 +60,8 @@ const finalStatus = (answer: string): CharacterStatus => {
     const status = {};
     [...VALID_CHARACTERS].forEach((char) => {
         status[char] = matches.has(char)
-            ? LetterResult.MATCH
-            : LetterResult.WRONG;
+            ? LetterStatus.MATCH
+            : LetterStatus.WRONG;
     });
     return status;
 };
@@ -258,7 +258,7 @@ export class WordleAppImplementation implements WordleApp {
         // 2. the guess was correct
         copy.isGameOver =
             copy.guessIndex === copy.maxGuesses ||
-            result.every((res) => res === LetterResult.MATCH);
+            result.every((res) => res === LetterStatus.MATCH);
         if (copy.isGameOver) {
             copy.answer = copy.engine.getAnswer();
             copy.characterStatus = finalStatus(copy.answer);
