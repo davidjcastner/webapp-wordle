@@ -1,0 +1,42 @@
+.new-game {
+    height: 24rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+.new-game h1,
+.new-game h2,
+.new-game h3,
+.new-game h4,
+.new-game h5,
+.new-game h6,
+.new-game p {
+    margin: 0;
+}
+
+.text-answer {
+    font-weight: 600;
+}
+.new-game-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 0.2rem;
+    height: 4rem;
+    width: 12rem;
+    padding: 0;
+    font-weight: 600;
+    margin: 0;
+    transition: all 0.2s;
+    background-color: var(--color-brand-200);
+    color: var(--color-primary-900);
+}
+
+.new-game-button:hover,
+.new-game-button:focus {
+    background-color: var(--color-brand-300);
+}

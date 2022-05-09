@@ -4,6 +4,7 @@ import { KEYCODE_LOOKUP } from '../data/KeycodeLookup';
 import { StatusToClassName } from '../data/StatusToClassName';
 import { ActionType } from '../enums/actionType';
 import { LetterStatus } from '../enums/LetterStatus';
+import './Keyboard.css';
 
 /** individual keyboard clickable button */
 const KeyboardButton: FC<{ code: string }> = ({ code }) => {

@@ -11,15 +11,15 @@
     --default-color-primary-900: hsl(225, 15%, 15%);
 
     /* primary color associated with brand */
-    --default-color-brand-100: hsl(225, 60%, 84%);
-    --default-color-brand-200: hsl(225, 60%, 74%);
-    --default-color-brand-300: hsl(225, 60%, 64%);
-    --default-color-brand-400: hsl(225, 60%, 54%);
-    --default-color-brand-500: hsl(225, 60%, 46%);
-    --default-color-brand-600: hsl(225, 60%, 38%);
-    --default-color-brand-700: hsl(225, 60%, 30%);
-    --default-color-brand-800: hsl(225, 60%, 22%);
-    --default-color-brand-900: hsl(225, 60%, 15%);
+    --default-color-brand-100: hsl(225, 40%, 84%);
+    --default-color-brand-200: hsl(225, 40%, 74%);
+    --default-color-brand-300: hsl(225, 40%, 64%);
+    --default-color-brand-400: hsl(225, 40%, 54%);
+    --default-color-brand-500: hsl(225, 40%, 46%);
+    --default-color-brand-600: hsl(225, 40%, 38%);
+    --default-color-brand-700: hsl(225, 40%, 30%);
+    --default-color-brand-800: hsl(225, 40%, 22%);
+    --default-color-brand-900: hsl(225, 40%, 15%);
 
     /* accent color associated with brand */
     --default-color-accent-100: hsl(175, 70%, 84%);

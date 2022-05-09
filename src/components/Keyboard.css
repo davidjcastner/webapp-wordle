@@ -1,0 +1,90 @@
+.keyboard {
+    height: 24rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.keyboard-row {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.keyboard-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 0.2rem;
+    height: 4rem;
+    width: 4rem;
+    padding: 0;
+    font-weight: 600;
+    margin: 0;
+    transition: all 0.2s;
+}
+.keyboard-button:hover,
+.keyboard-button:focus {
+    background-color: var(--color-primary-200);
+}
+
+.keyboard-button.is-wide {
+    width: 8rem;
+    background-color: var(--color-brand-200);
+    color: var(--color-primary-900);
+}
+.keyboard-button.is-wide:hover,
+.keyboard-button.is-wide:focus {
+    background-color: var(--color-brand-300);
+}
+
+@media (max-width: 550px) {
+    .keyboard {
+        gap: 0.2rem;
+    }
+    .keyboard-row {
+        gap: 0.2rem;
+    }
+    .keyboard-button {
+        width: 2.6rem;
+        height: 2.6rem;
+        font-size: 0.9rem;
+    }
+    .keyboard-button.is-wide {
+        width: 5rem;
+    }
+}
+
+.keyboard-button.is-wrong {
+    background-color: var(--color-primary-600);
+    border-color: var(--color-primary-500);
+    color: var(--color-primary-100);
+}
+.keyboard-button.is-wrong:hover,
+.keyboard-button.is-wrong:focus {
+    background-color: var(--color-primary-800);
+}
+
+.keyboard-button.is-close {
+    background-color: var(--color-yellow-700);
+    border-color: var(--color-primary-500);
+    color: var(--color-primary-100);
+}
+.keyboard-button.is-close:hover,
+.keyboard-button.is-close:focus {
+    background-color: var(--color-yellow-900);
+}
+
+.keyboard-button.is-match {
+    background-color: var(--color-green-700);
+    border-color: var(--color-primary-500);
+    color: var(--color-primary-100);
+}
+.keyboard-button.is-match:hover,
+.keyboard-button.is-match:focus {
+    background-color: var(--color-green-900);
+}

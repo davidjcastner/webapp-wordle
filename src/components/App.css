@@ -2,7 +2,7 @@
     display: none;
 }
 
-@media screen and (max-width: 299px) {
+@media (max-width: 299px) {
     #invalid-screen {
         display: block;
     }

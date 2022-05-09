@@ -24,7 +24,7 @@
     border-style: solid;
     border-width: 0.125rem;
     transition: all 0.2s;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .guess-letter.is-blank {
