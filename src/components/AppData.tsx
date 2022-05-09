@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { useWordle } from '../context/wordle';
 import { AvailableData } from '../types/AvailableData';
+import './AppData.css';
 
 /** hidden component that provides the state of the game for bots to use */
 export const AppData: FC = () => {
@@ -18,5 +19,9 @@ export const AppData: FC = () => {
     // format the data as a string
     const dataString = JSON.stringify(data);
     // add data to the page
-    return <pre>{dataString}</pre>;
+    return (
+        <div id='app-data'>
+            <pre>{dataString}</pre>
+        </div>
+    );
 };

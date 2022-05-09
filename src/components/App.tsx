@@ -9,6 +9,9 @@ import { useWordle, WordleProvider } from '../context/wordle';
 import { fetchWordSet } from '../data/fetchWordSet';
 import { ActionType } from '../enums/actionType';
 
+// styling
+import './App.css';
+
 /** the type of data loaded */
 type Data = Set<string>;
 

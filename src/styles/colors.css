@@ -1,17 +1,118 @@
 :root {
-    --default-color-primary-100: hsl(225, 15%, 78%);
-    --default-color-primary-200: hsl(225, 15%, 70%);
-    --default-color-primary-300: hsl(225, 15%, 62%);
+    /* grey scale for general styling */
+    --default-color-primary-100: hsl(225, 15%, 84%);
+    --default-color-primary-200: hsl(225, 15%, 74%);
+    --default-color-primary-300: hsl(225, 15%, 64%);
     --default-color-primary-400: hsl(225, 15%, 54%);
     --default-color-primary-500: hsl(225, 15%, 46%);
     --default-color-primary-600: hsl(225, 15%, 38%);
     --default-color-primary-700: hsl(225, 15%, 30%);
     --default-color-primary-800: hsl(225, 15%, 22%);
     --default-color-primary-900: hsl(225, 15%, 15%);
+
+    /* primary color associated with brand */
+    --default-color-brand-100: hsl(225, 60%, 84%);
+    --default-color-brand-200: hsl(225, 60%, 74%);
+    --default-color-brand-300: hsl(225, 60%, 64%);
+    --default-color-brand-400: hsl(225, 60%, 54%);
+    --default-color-brand-500: hsl(225, 60%, 46%);
+    --default-color-brand-600: hsl(225, 60%, 38%);
+    --default-color-brand-700: hsl(225, 60%, 30%);
+    --default-color-brand-800: hsl(225, 60%, 22%);
+    --default-color-brand-900: hsl(225, 60%, 15%);
+
+    /* accent color associated with brand */
+    --default-color-accent-100: hsl(175, 70%, 84%);
+    --default-color-accent-200: hsl(175, 70%, 74%);
+    --default-color-accent-300: hsl(175, 70%, 64%);
+    --default-color-accent-400: hsl(175, 70%, 54%);
+    --default-color-accent-500: hsl(175, 70%, 46%);
+    --default-color-accent-600: hsl(175, 70%, 38%);
+    --default-color-accent-700: hsl(175, 70%, 30%);
+    --default-color-accent-800: hsl(175, 70%, 22%);
+    --default-color-accent-900: hsl(175, 70%, 15%);
+
+    /* highlight color red */
+    --default-color-red-100: hsl(0, 70%, 84%);
+    --default-color-red-200: hsl(0, 70%, 74%);
+    --default-color-red-300: hsl(0, 70%, 64%);
+    --default-color-red-400: hsl(0, 70%, 54%);
+    --default-color-red-500: hsl(0, 70%, 46%);
+    --default-color-red-600: hsl(0, 70%, 38%);
+    --default-color-red-700: hsl(0, 70%, 30%);
+    --default-color-red-800: hsl(0, 70%, 22%);
+    --default-color-red-900: hsl(0, 70%, 15%);
+
+    /* highlight color green */
+    --default-color-green-100: hsl(120, 70%, 84%);
+    --default-color-green-200: hsl(120, 70%, 74%);
+    --default-color-green-300: hsl(120, 70%, 64%);
+    --default-color-green-400: hsl(120, 70%, 54%);
+    --default-color-green-500: hsl(120, 70%, 46%);
+    --default-color-green-600: hsl(120, 70%, 38%);
+    --default-color-green-700: hsl(120, 70%, 30%);
+    --default-color-green-800: hsl(120, 70%, 22%);
+    --default-color-green-900: hsl(120, 70%, 15%);
+
+    /* highlight color blue */
+    --default-color-blue-100: hsl(240, 70%, 84%);
+    --default-color-blue-200: hsl(240, 70%, 74%);
+    --default-color-blue-300: hsl(240, 70%, 64%);
+    --default-color-blue-400: hsl(240, 70%, 54%);
+    --default-color-blue-500: hsl(240, 70%, 46%);
+    --default-color-blue-600: hsl(240, 70%, 38%);
+    --default-color-blue-700: hsl(240, 70%, 30%);
+    --default-color-blue-800: hsl(240, 70%, 22%);
+    --default-color-blue-900: hsl(240, 70%, 15%);
+
+    /* highlight color orange */
+    --default-color-orange-100: hsl(30, 70%, 84%);
+    --default-color-orange-200: hsl(30, 70%, 74%);
+    --default-color-orange-300: hsl(30, 70%, 64%);
+    --default-color-orange-400: hsl(30, 70%, 54%);
+    --default-color-orange-500: hsl(30, 70%, 46%);
+    --default-color-orange-600: hsl(30, 70%, 38%);
+    --default-color-orange-700: hsl(30, 70%, 30%);
+    --default-color-orange-800: hsl(30, 70%, 22%);
+    --default-color-orange-900: hsl(30, 70%, 15%);
+
+    /* highlight color purple */
+    --default-color-purple-100: hsl(300, 70%, 84%);
+    --default-color-purple-200: hsl(300, 70%, 74%);
+    --default-color-purple-300: hsl(300, 70%, 64%);
+    --default-color-purple-400: hsl(300, 70%, 54%);
+    --default-color-purple-500: hsl(300, 70%, 46%);
+    --default-color-purple-600: hsl(300, 70%, 38%);
+    --default-color-purple-700: hsl(300, 70%, 30%);
+    --default-color-purple-800: hsl(300, 70%, 22%);
+    --default-color-purple-900: hsl(300, 70%, 15%);
+
+    /* highlight color yellow */
+    --default-color-yellow-100: hsl(50, 70%, 84%);
+    --default-color-yellow-200: hsl(50, 70%, 74%);
+    --default-color-yellow-300: hsl(50, 70%, 64%);
+    --default-color-yellow-400: hsl(50, 70%, 54%);
+    --default-color-yellow-500: hsl(50, 70%, 46%);
+    --default-color-yellow-600: hsl(50, 70%, 38%);
+    --default-color-yellow-700: hsl(50, 70%, 30%);
+    --default-color-yellow-800: hsl(50, 70%, 22%);
+    --default-color-yellow-900: hsl(50, 70%, 15%);
+
+    /* highlight color cyan */
+    --default-color-cyan-100: hsl(180, 70%, 84%);
+    --default-color-cyan-200: hsl(180, 70%, 74%);
+    --default-color-cyan-300: hsl(180, 70%, 64%);
+    --default-color-cyan-400: hsl(180, 70%, 54%);
+    --default-color-cyan-500: hsl(180, 70%, 46%);
+    --default-color-cyan-600: hsl(180, 70%, 38%);
+    --default-color-cyan-700: hsl(180, 70%, 30%);
+    --default-color-cyan-800: hsl(180, 70%, 22%);
+    --default-color-cyan-900: hsl(180, 70%, 15%);
 }
 
 @media (prefers-color-scheme: light) {
     :root {
+        /* grey scale for general styling */
         --color-primary-100: var(--default-color-primary-100);
         --color-primary-200: var(--default-color-primary-200);
         --color-primary-300: var(--default-color-primary-300);
@@ -21,11 +122,111 @@
         --color-primary-700: var(--default-color-primary-700);
         --color-primary-800: var(--default-color-primary-800);
         --color-primary-900: var(--default-color-primary-900);
+
+        /* primary color associated with brand */
+        --color-brand-100: var(--default-color-brand-100);
+        --color-brand-200: var(--default-color-brand-200);
+        --color-brand-300: var(--default-color-brand-300);
+        --color-brand-400: var(--default-color-brand-400);
+        --color-brand-500: var(--default-color-brand-500);
+        --color-brand-600: var(--default-color-brand-600);
+        --color-brand-700: var(--default-color-brand-700);
+        --color-brand-800: var(--default-color-brand-800);
+        --color-brand-900: var(--default-color-brand-900);
+
+        /* accent color associated with brand */
+        --color-accent-100: var(--default-color-accent-100);
+        --color-accent-200: var(--default-color-accent-200);
+        --color-accent-300: var(--default-color-accent-300);
+        --color-accent-400: var(--default-color-accent-400);
+        --color-accent-500: var(--default-color-accent-500);
+        --color-accent-600: var(--default-color-accent-600);
+        --color-accent-700: var(--default-color-accent-700);
+        --color-accent-800: var(--default-color-accent-800);
+        --color-accent-900: var(--default-color-accent-900);
+
+        /* highlight color red */
+        --color-red-100: var(--default-color-red-100);
+        --color-red-200: var(--default-color-red-200);
+        --color-red-300: var(--default-color-red-300);
+        --color-red-400: var(--default-color-red-400);
+        --color-red-500: var(--default-color-red-500);
+        --color-red-600: var(--default-color-red-600);
+        --color-red-700: var(--default-color-red-700);
+        --color-red-800: var(--default-color-red-800);
+        --color-red-900: var(--default-color-red-900);
+
+        /* highlight color green */
+        --color-green-100: var(--default-color-green-100);
+        --color-green-200: var(--default-color-green-200);
+        --color-green-300: var(--default-color-green-300);
+        --color-green-400: var(--default-color-green-400);
+        --color-green-500: var(--default-color-green-500);
+        --color-green-600: var(--default-color-green-600);
+        --color-green-700: var(--default-color-green-700);
+        --color-green-800: var(--default-color-green-800);
+        --color-green-900: var(--default-color-green-900);
+
+        /* highlight color blue */
+        --color-blue-100: var(--default-color-blue-100);
+        --color-blue-200: var(--default-color-blue-200);
+        --color-blue-300: var(--default-color-blue-300);
+        --color-blue-400: var(--default-color-blue-400);
+        --color-blue-500: var(--default-color-blue-500);
+        --color-blue-600: var(--default-color-blue-600);
+        --color-blue-700: var(--default-color-blue-700);
+        --color-blue-800: var(--default-color-blue-800);
+        --color-blue-900: var(--default-color-blue-900);
+
+        /* highlight color orange */
+        --color-orange-100: var(--default-color-orange-100);
+        --color-orange-200: var(--default-color-orange-200);
+        --color-orange-300: var(--default-color-orange-300);
+        --color-orange-400: var(--default-color-orange-400);
+        --color-orange-500: var(--default-color-orange-500);
+        --color-orange-600: var(--default-color-orange-600);
+        --color-orange-700: var(--default-color-orange-700);
+        --color-orange-800: var(--default-color-orange-800);
+        --color-orange-900: var(--default-color-orange-900);
+
+        /* highlight color purple */
+        --color-purple-100: var(--default-color-purple-100);
+        --color-purple-200: var(--default-color-purple-200);
+        --color-purple-300: var(--default-color-purple-300);
+        --color-purple-400: var(--default-color-purple-400);
+        --color-purple-500: var(--default-color-purple-500);
+        --color-purple-600: var(--default-color-purple-600);
+        --color-purple-700: var(--default-color-purple-700);
+        --color-purple-800: var(--default-color-purple-800);
+        --color-purple-900: var(--default-color-purple-900);
+
+        /* highlight color yellow */
+        --color-yellow-100: var(--default-color-yellow-100);
+        --color-yellow-200: var(--default-color-yellow-200);
+        --color-yellow-300: var(--default-color-yellow-300);
+        --color-yellow-400: var(--default-color-yellow-400);
+        --color-yellow-500: var(--default-color-yellow-500);
+        --color-yellow-600: var(--default-color-yellow-600);
+        --color-yellow-700: var(--default-color-yellow-700);
+        --color-yellow-800: var(--default-color-yellow-800);
+        --color-yellow-900: var(--default-color-yellow-900);
+
+        /* highlight color cyan */
+        --color-cyan-100: var(--default-color-cyan-100);
+        --color-cyan-200: var(--default-color-cyan-200);
+        --color-cyan-300: var(--default-color-cyan-300);
+        --color-cyan-400: var(--default-color-cyan-400);
+        --color-cyan-500: var(--default-color-cyan-500);
+        --color-cyan-600: var(--default-color-cyan-600);
+        --color-cyan-700: var(--default-color-cyan-700);
+        --color-cyan-800: var(--default-color-cyan-800);
+        --color-cyan-900: var(--default-color-cyan-900);
     }
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
+        /* grey scale for general styling */
         --color-primary-100: var(--default-color-primary-900);
         --color-primary-200: var(--default-color-primary-800);
         --color-primary-300: var(--default-color-primary-700);
@@ -35,5 +236,104 @@
         --color-primary-700: var(--default-color-primary-300);
         --color-primary-800: var(--default-color-primary-200);
         --color-primary-900: var(--default-color-primary-100);
+
+        /* primary color associated with brand */
+        --color-brand-100: var(--default-color-brand-900);
+        --color-brand-200: var(--default-color-brand-800);
+        --color-brand-300: var(--default-color-brand-700);
+        --color-brand-400: var(--default-color-brand-600);
+        --color-brand-500: var(--default-color-brand-500);
+        --color-brand-600: var(--default-color-brand-400);
+        --color-brand-700: var(--default-color-brand-300);
+        --color-brand-800: var(--default-color-brand-200);
+        --color-brand-900: var(--default-color-brand-100);
+
+        /* accent color associated with brand */
+        --color-accent-100: var(--default-color-accent-900);
+        --color-accent-200: var(--default-color-accent-800);
+        --color-accent-300: var(--default-color-accent-700);
+        --color-accent-400: var(--default-color-accent-600);
+        --color-accent-500: var(--default-color-accent-500);
+        --color-accent-600: var(--default-color-accent-400);
+        --color-accent-700: var(--default-color-accent-300);
+        --color-accent-800: var(--default-color-accent-200);
+        --color-accent-900: var(--default-color-accent-100);
+
+        /* highlight color red */
+        --color-red-100: var(--default-color-red-900);
+        --color-red-200: var(--default-color-red-800);
+        --color-red-300: var(--default-color-red-700);
+        --color-red-400: var(--default-color-red-600);
+        --color-red-500: var(--default-color-red-500);
+        --color-red-600: var(--default-color-red-400);
+        --color-red-700: var(--default-color-red-300);
+        --color-red-800: var(--default-color-red-200);
+        --color-red-900: var(--default-color-red-100);
+
+        /* highlight color green */
+        --color-green-100: var(--default-color-green-900);
+        --color-green-200: var(--default-color-green-800);
+        --color-green-300: var(--default-color-green-700);
+        --color-green-400: var(--default-color-green-600);
+        --color-green-500: var(--default-color-green-500);
+        --color-green-600: var(--default-color-green-400);
+        --color-green-700: var(--default-color-green-300);
+        --color-green-800: var(--default-color-green-200);
+        --color-green-900: var(--default-color-green-100);
+
+        /* highlight color blue */
+        --color-blue-100: var(--default-color-blue-900);
+        --color-blue-200: var(--default-color-blue-800);
+        --color-blue-300: var(--default-color-blue-700);
+        --color-blue-400: var(--default-color-blue-600);
+        --color-blue-500: var(--default-color-blue-500);
+        --color-blue-600: var(--default-color-blue-400);
+        --color-blue-700: var(--default-color-blue-300);
+        --color-blue-800: var(--default-color-blue-200);
+        --color-blue-900: var(--default-color-blue-100);
+
+        /* highlight color orange */
+        --color-orange-100: var(--default-color-orange-900);
+        --color-orange-200: var(--default-color-orange-800);
+        --color-orange-300: var(--default-color-orange-700);
+        --color-orange-400: var(--default-color-orange-600);
+        --color-orange-500: var(--default-color-orange-500);
+        --color-orange-600: var(--default-color-orange-400);
+        --color-orange-700: var(--default-color-orange-300);
+        --color-orange-800: var(--default-color-orange-200);
+        --color-orange-900: var(--default-color-orange-100);
+
+        /* highlight color purple */
+        --color-purple-100: var(--default-color-purple-900);
+        --color-purple-200: var(--default-color-purple-800);
+        --color-purple-300: var(--default-color-purple-700);
+        --color-purple-400: var(--default-color-purple-600);
+        --color-purple-500: var(--default-color-purple-500);
+        --color-purple-600: var(--default-color-purple-400);
+        --color-purple-700: var(--default-color-purple-300);
+        --color-purple-800: var(--default-color-purple-200);
+        --color-purple-900: var(--default-color-purple-100);
+
+        /* highlight color yellow */
+        --color-yellow-100: var(--default-color-yellow-900);
+        --color-yellow-200: var(--default-color-yellow-800);
+        --color-yellow-300: var(--default-color-yellow-700);
+        --color-yellow-400: var(--default-color-yellow-600);
+        --color-yellow-500: var(--default-color-yellow-500);
+        --color-yellow-600: var(--default-color-yellow-400);
+        --color-yellow-700: var(--default-color-yellow-300);
+        --color-yellow-800: var(--default-color-yellow-200);
+        --color-yellow-900: var(--default-color-yellow-100);
+
+        /* highlight color cyan */
+        --color-cyan-100: var(--default-color-cyan-900);
+        --color-cyan-200: var(--default-color-cyan-800);
+        --color-cyan-300: var(--default-color-cyan-700);
+        --color-cyan-400: var(--default-color-cyan-600);
+        --color-cyan-500: var(--default-color-cyan-500);
+        --color-cyan-600: var(--default-color-cyan-400);
+        --color-cyan-700: var(--default-color-cyan-300);
+        --color-cyan-800: var(--default-color-cyan-200);
+        --color-cyan-900: var(--default-color-cyan-100);
     }
 }

@@ -1,6 +1,7 @@
 import { FC, useEffect } from 'react';
 import { useWordle } from '../context/wordle';
 import { ActionType } from '../enums/actionType';
+import './ErrorHandler.css';
 
 /** display errors when they occur and removes them after a short delay */
 export const ErrorHandler: FC = () => {
@@ -10,7 +11,6 @@ export const ErrorHandler: FC = () => {
     // remove the error after a short delay
     useEffect(() => {
         if (app.errorId > 0) {
-            console.log(`removing error ${app.errorId}`);
             setTimeout(() => {
                 dispatch({
                     type: ActionType.REMOVE_ERROR,
@@ -28,7 +28,7 @@ export const ErrorHandler: FC = () => {
         <div className='error-handler'>
             {errors.map((message, index) => (
                 <div className='error-message' key={index}>
-                    <p>{message}</p>
+                    {message}
                 </div>
             ))}
         </div>

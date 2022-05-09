@@ -1,0 +1,30 @@
+#invalid-screen {
+    display: none;
+}
+
+@media screen and (max-width: 299px) {
+    #invalid-screen {
+        display: block;
+    }
+    #app {
+        display: none;
+    }
+}
+
+#app {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.title-bar {
+    padding: 2rem;
+    text-align: center;
+    text-transform: uppercase;
+}
+.title-bar h1 {
+    margin: 0;
+    letter-spacing: 1rem;
+}

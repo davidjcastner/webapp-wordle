@@ -3,6 +3,7 @@ import { useWordle } from '../context/wordle';
 import { StatusToClassName } from '../data/StatusToClassName';
 import { LetterStatus } from '../enums/LetterStatus';
 import { WordleApp } from '../interfaces/WordleApp';
+import './GuessArea.css';
 
 /** information for rendering a letter */
 type LetterData = { character: string; status: LetterStatus };
@@ -31,8 +32,11 @@ const getLetterData = (
 /** individual letter */
 const Letter: FC<{ data: LetterData }> = ({ data }) => {
     const description = StatusToClassName[data.status];
+    const isBlankClass = data.character === ' ' ? 'is-blank' : '';
     return (
-        <div className={`guess-letter ${description}`}>{data.character}</div>
+        <div className={`guess-letter ${description} ${isBlankClass}`}>
+            {data.character}
+        </div>
     );
 };
 

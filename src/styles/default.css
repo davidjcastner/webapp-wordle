@@ -3,6 +3,12 @@ html {
     color: var(--color-primary-900);
 }
 
-body {
-    margin: 0;
+/* styling for when the app is small */
+@media screen and (max-width: 299px) {
+    html {
+        font-size: 12px;
+    }
+    body {
+        padding: 1rem;
+    }
 }
