@@ -3,6 +3,7 @@ export const fetchWordSet = (
     url: string,
     callback: (words: Set<string>) => void
 ): void => {
+    console.log(url);
     fetch(url)
         .then((response) => response.text())
         .then((text) => {

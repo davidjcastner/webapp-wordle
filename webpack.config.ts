@@ -2,6 +2,7 @@ import * as path from 'path';
 import * as webpack from 'webpack';
 import 'webpack-dev-server';
 
+import CopyPlugin from 'copy-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 const configuration: webpack.Configuration = {
@@ -10,6 +11,7 @@ const configuration: webpack.Configuration = {
     output: {
         filename: '[name].js',
         path: path.resolve(__dirname, 'dist'),
+        clean: true,
     },
     devtool: 'source-map',
     devServer: {
@@ -25,7 +27,10 @@ const configuration: webpack.Configuration = {
             { test: /\.css/, use: ['style-loader', 'css-loader'] },
         ],
     },
-    plugins: [new HtmlWebpackPlugin({ template: './app.html' })],
+    plugins: [
+        new CopyPlugin({ patterns: [{ from: './assets', to: './assets' }] }),
+        new HtmlWebpackPlugin({ template: './app.html' }),
+    ],
 };
 
 export default configuration;

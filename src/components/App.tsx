@@ -29,8 +29,8 @@ const AppWithContext: FC = () => {
         const wordLength = 5;
         const nextApp = app.setProperties(maxGuesses, wordLength);
         dispatch({ type: ActionType.INITIALIZE, payload: nextApp });
-        fetchWordSet('/assets/allowed_guesses.txt', setAllowedGuesses);
-        fetchWordSet('/assets/allowed_answers.txt', setAllowedAnswers);
+        fetchWordSet('./assets/allowed_guesses.txt', setAllowedGuesses);
+        fetchWordSet('./assets/allowed_answers.txt', setAllowedAnswers);
     }, []);
 
     // once data is loaded, attach it to the app
