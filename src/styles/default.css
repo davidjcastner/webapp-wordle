@@ -5,9 +5,6 @@ html {
 
 /* styling for when the app is small */
 @media screen and (max-width: 299px) {
-    html {
-        font-size: 12px;
-    }
     body {
         padding: 1rem;
     }

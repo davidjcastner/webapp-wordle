@@ -65,6 +65,9 @@ export const Keyboard: FC = () => {
     // add event listener on mount
     useEffect(() => {
         document.addEventListener('keydown', keydownHandler);
+        return () => {
+            document.removeEventListener('keydown', keydownHandler);
+        };
     }, []);
 
     // display the keyboard

@@ -21,16 +21,21 @@ export const ErrorHandler: FC = () => {
     }, [app.errorId]);
 
     // get an array of error messages
-    const errors = Object.values(app.errors);
+    const errors = Object.entries(app.errors);
+    const countClass = `count-${Math.min(errors.length, 5)}`;
 
     // display the error
+    // TODO: change key to errorId
     return (
-        <div className='error-handler'>
-            {errors.map((message, index) => (
-                <div className='error-message' key={index}>
-                    {message}
-                </div>
-            ))}
+        <div className={`error-handler ${countClass}`}>
+            {errors.map((errorEntry) => {
+                const [errorId, message] = errorEntry;
+                return (
+                    <div className='error-message' key={errorId}>
+                        {message}
+                    </div>
+                );
+            })}
         </div>
     );
 };
