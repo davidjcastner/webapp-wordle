@@ -19,6 +19,7 @@ const KeyboardButton: FC<{ code: string }> = ({ code }) => {
     const isWideClass = code.length > 1 ? 'is-wide' : '';
     const displayName = code !== 'Backspace' ? code : '⌫';
     const fullClassName = `keyboard-button ${statusClass} ${isWideClass}`;
+    const buttonId = `button-${code.toLowerCase()}`;
     // handle the click
     const handleClick = () => {
         if (code in app.characterStatus) {
@@ -34,7 +35,7 @@ const KeyboardButton: FC<{ code: string }> = ({ code }) => {
     };
     // dom for the button
     return (
-        <button className={fullClassName} onClick={handleClick}>
+        <button id={buttonId} className={fullClassName} onClick={handleClick}>
             {displayName}
         </button>
     );
