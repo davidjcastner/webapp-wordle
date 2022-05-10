@@ -20,6 +20,14 @@
     overflow: hidden;
 }
 
+.container {
+    min-height: calc(100vh - 4.4rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
 .title-bar {
     padding: 2rem;
     text-align: center;
@@ -28,4 +36,13 @@
 .title-bar h1 {
     margin: 0;
     letter-spacing: 1rem;
+}
+
+.footer {
+    padding: 1rem;
+    text-align: center;
+}
+
+.footer p {
+    margin: 0;
 }

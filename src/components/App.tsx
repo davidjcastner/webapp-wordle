@@ -62,14 +62,24 @@ const AppWithContext: FC = () => {
             </div>
             <div id='app'>
                 <AppData />
-                <div className='title-bar'>
-                    <h1>Wordle</h1>
+                <div className='container'>
+                    <div className='title-bar'>
+                        <h1>Wordle</h1>
+                    </div>
+                    {!app.isReady && <Loading />}
+                    {app.isReady && <GuessArea />}
+                    {app.isReady && !app.isGameOver && <Keyboard />}
+                    {app.isReady && app.isGameOver && <NewGame />}
+                    {app.isReady && <ErrorHandler />}
                 </div>
-                {!app.isReady && <Loading />}
-                {app.isReady && <GuessArea />}
-                {app.isReady && !app.isGameOver && <Keyboard />}
-                {app.isReady && app.isGameOver && <NewGame />}
-                {app.isReady && <ErrorHandler />}
+                <div className='footer'>
+                    <p>
+                        View on{' '}
+                        <a href='https://github.com/davidjcastner/webapp-wordle'>
+                            GitHub
+                        </a>
+                    </p>
+                </div>
             </div>
         </>
     );
