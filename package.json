@@ -5,6 +5,7 @@
     "author": "David Castner",
     "scripts": {
         "build": "npx webpack --config webpack.config.ts --mode=production",
+        "deploy": "py deploy.py",
         "start": "npx webpack serve --config ./webpack.config.ts --mode=development --history-api-fallback"
     },
     "dependencies": {

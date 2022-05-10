@@ -10,7 +10,7 @@ const configuration: webpack.Configuration = {
     entry: './app.tsx',
     output: {
         filename: '[name].js',
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, 'build'),
         clean: true,
     },
     devtool: 'source-map',
